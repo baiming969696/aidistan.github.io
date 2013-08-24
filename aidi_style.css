@@ -1,3 +1,6 @@
+/*-----------------------------------------------------------------------------
+| Basic CSS
+-----------------------------------------------------------------------------*/
 body {
     font: 100%/1.4 Verdana, Arial, Helvetica, sans-serif;
     background-color: #FFFFFF;
@@ -63,10 +66,13 @@ a:hover, a:active, a:focus {
     font-size: 1px;
     line-height: 0px;
 }
+
+
+
 /*-----------------------------------------------------------------------------
-| For Windows 8 style Icons
+| Windows 8 style
 -----------------------------------------------------------------------------*/
-.metro_item {
+.metroitem {
     /*position: relative;*/
     height: 168px;
     width: 168px;
@@ -77,22 +83,8 @@ a:hover, a:active, a:focus {
     -moz-transition: width 0.3s ease 0.1s, line-height 0s ease 0.1s, color 0.1s ease;
     -o-transition: width 0.3s ease 0.1s, line-height 0s ease 0.1s, color 0.1s ease;
 }
-.metro_item img {
-    width: 168px;
-    height: 168px;
-    float: left;
-    margin: 0px 6px;
-}
-.metro_item h4 {
-    text-align: center;
-}
-.metro_item p {
-    font-family: Microsoft YaHei;
-    text-indent: 2em;
-    text-align: left;
-}
-.metro_item:hover {
-    width: 440px;
+.metroitem:hover {
+    width: 450px;
     line-height: 20px;
     color: #575858;
     transition: width 0.3s ease, line-height 0s ease 0.2s, color 0.1s ease 0.3s;
@@ -100,20 +92,36 @@ a:hover, a:active, a:focus {
     -moz-transition: width 0.3s ease, line-height 0s ease 0.2s, color 0.1s ease 0.3s;
     -o-transition: width 0.3s ease, line-height 0s ease 0.2s, color 0.1s ease 0.3s;
 }
-.metro_item #metro_item_rubybadge{
+
+.metroitem h4 { text-align: center; }
+.metroitem p  { text-align: left; }
+.metroitem .cn{ font-family: Microsoft YaHei; }
+.metroitem .en{ font-family: Verdana; }
+.metroitem p.cn { text-indent: 2em; }
+.metroitem p.en { text-indent: 0em; }
+.metroitem img {
+    width: 168px;
+    height: 168px;
+    float: left;
+    margin: 0px 15px;
+}
+
+.metroitem img.metroitem_rubybadge{
     position: absolute;
-    /*bottom: 10px;*/
     width: 0px;
     height: 0px;
     transition: width 0.1s ease, height 0.1s ease;
 }
-.metro_item:hover #metro_item_rubybadge{
+.metroitem:hover img.metroitem_rubybadge{
     width: 104px;
     height: 18px;
     transition: width 0.1s ease 0.3s, height 0.1s ease 0.3s;
 }
+
+
+
 /*-----------------------------------------------------------------------------
-| For Nav bar
+| Nav bar
 -----------------------------------------------------------------------------*/
 #nav,#nav ul {
     list-style: none outside none;
@@ -144,11 +152,11 @@ a:hover, a:active, a:focus {
     -webkit-transform-origin: 0 0;
     transform-origin: 0 0;
 
-    -moz-transition: -moz-transform 0.1s linear;
-    -ms-transition: -ms-transform 0.1s linear;
-    -o-transition: -o-transform 0.1s linear;
-    -webkit-transition: -webkit-transform 0.1s linear;
-    transition: transform 0.1s linear;
+    -moz-transition: -moz-transform 0.1s ease-out;
+    -ms-transition: -ms-transform 0.1s ease-out;
+    -o-transition: -o-transform 0.1s ease-out;
+    -webkit-transition: -webkit-transform 0.1s ease-out;
+    transition: transform 0.1s ease-out;
 }
 #nav li {
     float: left;
