@@ -287,6 +287,19 @@ item_MTG = MetroItem.new(
     },
 )
 
+item_Galaxy = MetroItem.new(
+    "Galaxy",
+    "http://galaxy.no-ip.info/",
+    {
+        cn:"Galaxy",
+        en:"Galaxy",
+    },
+    {
+        cn:"生物信息在线分析平台",
+        en:"A online bioinformatics analysis platform.",
+    },
+)
+
 item_GuipengLee = MetroItem.new(
     "GuipengLee",
     "http://gplee.no-ip.org/",
@@ -306,7 +319,7 @@ item_GuipengLee = MetroItem.new(
 col_sites = MetroColumn.new("Sites", [item_Adome, item_AKB])
 col_pages = MetroColumn.new("Pages", [item_Github, item_LinkedIn])
 col_libs = MetroColumn.new("Featured Libs", [item_BioDB, item_MTG])
-col_links = MetroColumn.new("Links", [item_GuipengLee])
+col_links = MetroColumn.new("Links", [item_Galaxy, item_GuipengLee])
 
 tab = MetroTab.new.push col_sites, col_pages, col_libs, col_links
 
