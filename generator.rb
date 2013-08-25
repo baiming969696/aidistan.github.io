@@ -6,13 +6,7 @@
 #
 # Copyright 2013 Aidi Stan
 #
-
 require "rexml/document"
-
-
-#
-# Definitions
-#
 
 $LANGUAGES = {
     en:"English",
@@ -28,12 +22,14 @@ class MetroItem
 
         # Icon
         ele = root.add_element "a"
-        ele.add_attribute "href", self.url
-        ele = ele.add_element "img"
         ele.add_attributes({
-            "alt" => self.name,
-            "src" => "images/#{self.name}.png"
-        })
+                "href" => self.url,
+                "target" => "_blank",
+            })
+        ele.add_element("img").add_attributes({
+                "alt" => self.name,
+                "src" => "images/#{self.name}.png"
+            })
 
         # Title
         ele = root.add_element "h4"
@@ -53,11 +49,10 @@ class MetroItem
                 ele = root.add_element "a"
                 ele.add_attribute "href", self.others[:rubybadge]
 
-                ele = ele.add_element "img"
-                ele.add_attributes({
-                    "class" => "metroitem_rubybadge",
-                    "src" => self.others[:rubybadge]+"@2x.png"
-                })
+                ele.add_element("img").add_attributes({
+                        "class" => "metroitem_rubybadge",
+                        "src" => self.others[:rubybadge]+"@2x.png"
+                    })
             end
         end
 
@@ -90,11 +85,10 @@ class MetroTab
             })
 
         # Add rows
-        root.add_element("tr")
+        root.add_element("tr") # Title row
         num_row = @cols.map{|col| col.items.size}.max
-        num_row.times do 
-            ele = root.add_element("tr")
-            ele.add_attribute "style", "height:180px;"
+        num_row.times do
+            root.add_element("tr").add_attribute("style", "height:180px;")
         end
 
         # Add columns
@@ -102,22 +96,21 @@ class MetroTab
             # Add the title
             ele = root.elements[1].add_element "td"
             ele.add_attribute "style", "width:180px;float:left;"
-            ele = ele.add_element "h3"
-            ele.text = col.name
+            ele.add_element("h3").text = col.name
 
             # Add items
             col.items.size.times do |i|
-                ele = root.elements[2+i].add_element "td"
-                ele.add_element col.items[i].to_html(lang)
+                root.elements[2+i].add_element("td").add_element(col.items[i].to_html(lang))
             end
 
             # Add empty items
-            (col.items.size+1).upto(num_row){|i| root.elements[1+i].add_element "td"}
+            (col.items.size+1).upto(num_row) do |i|
+                root.elements[1+i].add_element "td"
+            end
 
             # Add an empty column if next column has a name
             if @cols[index+1].is_a? MetroColumn and !@cols[index+1].name.nil?
-                ele = root.elements[1].add_element "td"
-                ele.add_attribute "style", "width:50px;"
+                root.elements[1].add_element("td").add_attribute("style", "width:50px;")
                 num_row.times{|i| root.elements[2+i].add_element "td"}
             end
         end
@@ -198,133 +191,3 @@ HERE_DOC_END
     end
 
 end
-
-
-#
-# Create contents here
-#
-item_Adome = MetroItem.new(
-    "Adome",
-    "http://aidistan.no-ip.org/Adome",
-    {
-        cn:"Aidi的个人博客",
-        en:"Aidi's Blog",
-    },
-    {
-        cn:"利用WordPress搭建的个人博客，通过多说同步至Qzone、人人、微博等平台。\n记录心情的点滴。",
-        en:"My personal blog based on WordPress, using DuoShuo plugin to synchronize posts to social platforms.\n(In Chinese)",
-    },
-)
-
-item_AKB = MetroItem.new(
-    "AKB",
-    "http://aidistan.no-ip.org/AKB",
-    {
-        cn:"Aidi的个人知识库",
-        en:"Aidi's Knowledge Base",
-    },
-    {
-        cn:"利用WordPress搭建的个人知识库，保存一些遇到过问题和解决方法，通过站内检索使用。\n记录探索的感动。",
-        en:"My Knowledge database based on WordPress, recording the problems I met.\n(In Chinese)",
-    }
-)
-
-item_Github = MetroItem.new(
-    "Github",
-    "https://github.com/aidistan",
-    {
-        cn:"Github",
-        en:"Github",
-    },
-    {
-        cn:"我在Github参加的开源项目的列表。\n最爱的游乐园。",
-        en:"A list of my publicly visible projects which interest me a lot.",
-    },
-)
-
-item_LinkedIn = MetroItem.new(
-    "LinkedIn",
-    "http://www.linkedin.com/in/aidistan",
-    {
-        cn:"LinkedIn",
-        en:"LinkedIn",
-    },
-    {
-        cn:"我在LinkedIn的简历。\nConnect me! :)",
-        en:"My brief profile. Connect me :)",
-    },
-)
-
-item_BioDB = MetroItem.new(
-    "BioDB",
-    "http://aidistan.github.io/biodb/",
-    {
-        cn:"BioDB",
-        en:"BioDB",
-    },
-    {
-        cn:"最初是与生物信息学各种数据库交互的Ruby脚本的合集，现已整理为Ruby Gem库，并在持续地更新~",
-        en:"A collection of my scripts used in bioinformatics database processing.",
-    },
-    {
-        rubybadge:"http://badge.fury.io/rb/biodb"
-    },
-)
-
-item_MTG = MetroItem.new(
-    "MTG-card",
-    "http://aidistan.github.io/mtg/",
-    {
-        cn:"MTG-card",
-        en:"MTG-card",
-    },
-    {
-        cn:"为万智牌写的一个Ruby Gem，可以用来查询牌价和管理牌组。",
-        en:"Library of MTG (Magic: The Gathering) for card price querying, deck managing and analysing.",
-    },
-    {
-        rubybadge:"http://badge.fury.io/rb/mtg-card"
-    },
-)
-
-item_Galaxy = MetroItem.new(
-    "Galaxy",
-    "http://galaxy.no-ip.info/",
-    {
-        cn:"Galaxy",
-        en:"Galaxy",
-    },
-    {
-        cn:"生物信息在线分析平台",
-        en:"A online bioinformatics analysis platform.",
-    },
-)
-
-item_GuipengLee = MetroItem.new(
-    "GuipengLee",
-    "http://gplee.no-ip.org/",
-    {
-        cn:"Lee的网站",
-        en:"Lee's Website",
-    },
-    {
-        cn:"Lee用Python搭建的网站。",
-        en:"Lee's website built by Python.",
-    },
-)
-
-#
-# Create layouts here
-#
-col_sites = MetroColumn.new("Sites", [item_Adome, item_AKB])
-col_pages = MetroColumn.new("Pages", [item_Github, item_LinkedIn])
-col_libs = MetroColumn.new("Featured Libs", [item_BioDB, item_MTG])
-col_links = MetroColumn.new("Links", [item_Galaxy, item_GuipengLee])
-
-tab = MetroTab.new.push col_sites, col_pages, col_libs, col_links
-
-#
-# Create pages here
-#
-MetroPage.new.push(tab).build
-
