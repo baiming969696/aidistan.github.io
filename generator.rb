@@ -115,7 +115,7 @@ class MetroTab
       end
 
       # Add an empty column if next column has a name
-      if @cols[index+1].is_a? MetroColumn && !@cols[index+1].name.nil?
+      if @cols[index+1].is_a?(MetroColumn) && !@cols[index+1].name.nil?
         root.elements[1].add_element("td").add_attribute("style", "width:50px;")
         num_row.times{ |i| root.elements[2+i].add_element("td") }
       end
@@ -174,7 +174,7 @@ class MetroPage
         <li><a href="#">Language</a>
           <ul class="subs">
 #{
-  $LANGUAGES.keys.collect{|sym| " "*24 + "<li><a href=\"index_#{sym}.html\">#{$LANGUAGES[sym]}</a></li>"}.join("\n")
+  LANGUAGES.keys.collect{|sym| " "*24 + "<li><a href=\"index_#{sym}.html\">#{LANGUAGES[sym]}</a></li>"}.join("\n")
 }
           </ul>
         </li>

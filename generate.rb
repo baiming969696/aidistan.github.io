@@ -58,19 +58,19 @@ item_LinkedIn = MetroItem.new(
   },
 )
 
-item_BioDB = MetroItem.new(
-  "BioDB",
-  "http://aidistan.github.io/biodb/",
+item_Bioinfo = MetroItem.new(
+  "Bioinfo",
+  "http://aidistan.github.io/bioinfo/",
   {
-    cn:"BioDB",
-    en:"BioDB",
+    cn:"Bioinfo",
+    en:"Bioinfo",
   },
   {
     cn:"最初是与生物信息学各种数据库交互的Ruby脚本的合集，现已整理为Ruby Gem库，并在持续地更新~",
     en:"A collection of my scripts used in bioinformatics database processing.",
   },
   {
-    rubybadge:"http://badge.fury.io/rb/biodb"
+    rubybadge:"http://badge.fury.io/rb/bioinfo"
   },
 )
 
@@ -121,7 +121,7 @@ item_GuipengLee = MetroItem.new(
 #
 col_sites = MetroColumn.new("Sites", [item_Adome, item_AKB])
 col_pages = MetroColumn.new("Pages", [item_Github, item_LinkedIn])
-col_libs = MetroColumn.new("Featured Libs", [item_BioDB, item_MTG])
+col_libs = MetroColumn.new("Featured Libs", [item_Bioinfo, item_MTG])
 col_links = MetroColumn.new("Links", [item_GuipengLee, item_Galaxy])
 
 tab = MetroTab.new.push col_sites, col_pages, col_libs, col_links
