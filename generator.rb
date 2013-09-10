@@ -9,11 +9,6 @@
 
 require "rexml/document"
 
-LANGUAGES = {
-  en:"English",
-  cn:"简体中文",
-}
-
 MetroItem = Struct.new(:name, :url, :title, :content, :others)
 class MetroItem
   def to_s(lang)
@@ -126,7 +121,10 @@ class MetroTab
 end
 
 class MetroPage
+  TAB_SEPARATOR = "<hr style=\"margin:40px 0px 40px 0px; background-color:#FFFFFF; color:#FFFFFF; height:1px; border:0;\"/>\n"
+
   attr_accessor :tabs
+
   def initialize
     @tabs = []
   end
@@ -142,58 +140,21 @@ class MetroPage
   end
 
   def to_s(lang)
-    return <<-HERE_DOC_END
-<!doctype html>
-<html>
-<head>
-<meta charset="utf-8">
-<title>Root | Aidi Stan</title>
-<link rel="stylesheet" type="text/css" href="aidi_style.css" media="all">
-</head>
-<body>
-<div class="container">
-  <div class="header">
-    <table border="0">
-      <tr style="width:20px">
-        <td><h1 style="font-size: 300%; margin-top: 40px;">Root</h1></td>
-      </tr>
-    </table>
-  </div><!-- end .header -->
-  <div class="content">
-#{
-  @tabs.map{|tab| tab.to_s(lang).split("\n").map{|line| " "*8 + line}.join("\n")}.join("
-    <hr style=\"margin:40px 0px 40px 0px; background-color:#FFFFFF; color:#FFFFFF; height:1px; border:0;\"/>\n")
-}
-  </div><!-- end .content -->
-  <div class="footer">
-    <hr/>
-    <span class="fltlft">
-      <!-- <p style="color: #AAAAAA;"><a href="#" style="color: #AAAAAA; text-decoration: none;">Aidi Stan's Homepage</a></p> -->
-      <ul id="nav">
-        <li><a href="#">Aidi Stan's Homepage</a>
-        <li><a href="#">Language</a>
-          <ul class="subs">
-#{
-  LANGUAGES.keys.collect{|sym| " "*24 + "<li><a href=\"index_#{sym}.html\">#{LANGUAGES[sym]}</a></li>"}.join("\n")
-}
-          </ul>
-        </li>
-        <li><a href="#">Mirror</a>
-          <ul class="subs">
-            <li><a href="http://aidistan.no-ip.org">Adome</a></li>
-            <li><a href="http://aidistan.github.io">Github</a></li>
-          </ul>
-        </li>
-      </ul>
-    </span>
-    <span class="fltrt">
-      <p style="color: #AAAAAA;">Copyright (C) 2013 Aidi Stan</p>
-    </span>
-  </div><!-- end .footer -->
-</div><!-- end .container -->
-</body>
-</html>
-HERE_DOC_END
+    rtn = File.open("sample_page.html").read
+    rtn.sub!(/^\s+<!-- MetroPage.tabs -->/) do
+      /^(?<indent> +)<!-- MetroPage.tabs -->/ =~ rtn
+      @tabs.map { |tab| tab.to_s(lang).split("\n").map { |line| indent + line }.join("\n") }.join(TAB_SEPARATOR)
+    end
+    rtn.sub!(/^\s+<!-- MetroPage.LANGUAGES -->/) do
+      /^(?<indent> +)<!-- MetroPage.LANGUAGES -->/ =~ rtn
+      [
+        '<li><a href="#">Language</a>',
+        '    <ul class="subs">',
+        LANGUAGES.keys.collect{|sym| "<li><a href=\"index_#{sym}.html\">#{LANGUAGES[sym]}</a></li>"},
+        '    </ul>',
+        '</li>',
+      ].flatten.collect! { |line| indent + line }.join("\n")
+    end
+    return rtn
   end
-
 end

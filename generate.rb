@@ -3,6 +3,11 @@
 
 require_relative "generator"
 
+LANGUAGES = {
+  en:"English",
+  cn:"简体中文",
+}
+
 #
 # Create contents here
 #
