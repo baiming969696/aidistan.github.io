@@ -9,17 +9,14 @@
 
 require "rexml/document"
 
-MetroItem = Struct.new(:name, :url, :title, :content, :others)
-class MetroItem
+MetroItem = Struct.new(:name, :url, :title, :content, :others) do
   def to_s(lang)
     REXML::Formatters::Pretty.new(4).write(to_html(lang), String.new)
   end
-
   def to_html(lang)
     # Root
     root = REXML::Element.new("div")
     root.add_attribute("class", "metroitem")
-
     # Icon
     ele = root.add_element("a")
     ele.add_attributes({
@@ -30,19 +27,15 @@ class MetroItem
         "alt" => self.name,
         "src" => "images/#{self.name}.png"
       })
-
     # Title
     ele = root.add_element("h4")
     ele.add_attribute("class", lang.to_s)
     ele.text = self.title[lang]
-
     # Content
     self.content[lang].split("\n").each do |p|
-      ele = root.add_element("p")
-      ele.add_attribute("class", lang.to_s)
-      ele.text = p
+      # Parse in html way in case that some html codes live in the content
+      ele = root.add_element(REXML::Document.new("<p class='#{lang}'>#{p}</p>").root)
     end
-
     # Others
     if self.others.is_a? Hash
       if self.others.include? :rubybadge
@@ -54,8 +47,10 @@ class MetroItem
             "src" => self.others[:rubybadge] + "@2x.png"
           })
       end
+      if self.others.include? :hook
+        root.add_element(REXML::Document.new(self.others[:hook]).root)
+      end
     end
-
     return root
   end
 end
