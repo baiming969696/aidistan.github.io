@@ -99,20 +99,31 @@ a:hover, a:active, a:focus {
 .metroitem .en{ font-family: Verdana; }
 .metroitem p.cn { text-indent: 2em; }
 .metroitem p.en { text-indent: 0em; }
-.metroitem img {
+
+.metroitem img.icon {
     width: 168px;
     height: 168px;
     float: left;
-    margin: 0px 15px;
+    margin: 0px 15px; 
+}
+.metroitem table.icon {
+    width: 168px;
+    height: 168px;
+    float: left;
+    margin: 0px 15px; 
+}
+.metroitem table.icon td{
+    color: #FFFFFF;
+    vertical-align: middle;
 }
 
-.metroitem img.metroitem_rubybadge{
+.metroitem img.rubybadge{
     position: absolute;
     width: 0px;
     height: 0px;
     transition: width 0.1s ease, height 0.1s ease;
 }
-.metroitem:hover img.metroitem_rubybadge{
+.metroitem:hover img.rubybadge{
     width: 104px;
     height: 18px;
     transition: width 0.1s ease 0.3s, height 0.1s ease 0.3s;

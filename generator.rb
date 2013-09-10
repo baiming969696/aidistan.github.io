@@ -9,7 +9,11 @@
 
 require "rexml/document"
 
-MetroItem = Struct.new(:name, :url, :title, :content, :others) do
+# @param [Hash] opts
+# @option opts [String] :hook HTML code to insert at MetroItem's tail
+# @option opts [String] :icon Text to substitute the image icon
+# @option opts [String] :rubybadge Rubybadge url
+MetroItem = Struct.new(:name, :url, :title, :content, :opts) do
   def to_s(lang)
     REXML::Formatters::Pretty.new(4).write(to_html(lang), String.new)
   end
@@ -20,13 +24,26 @@ MetroItem = Struct.new(:name, :url, :title, :content, :others) do
     # Icon
     ele = root.add_element("a")
     ele.add_attributes({
-        "href" => self.url,
-        "target" => "_blank",
+      "href" => self.url,
+      "target" => "_blank",
+    })
+    if self.opts.is_a?(Hash) && self.opts[:icon]
+      color = self.opts[:icon][:color]
+      size = self.opts[:icon][:size] || 20
+
+      ele = ele.add_element("table")
+      ele.add_attributes({
+        "class" => "icon",
+        "style" => "background-color: #{color}; font-size: #{size}px; line-height: #{size*1.5}px;",
       })
-    ele.add_element("img").add_attributes({
-        "alt" => self.name,
-        "src" => "images/#{self.name}.png"
+      ele.add_element(REXML::Document.new(self.opts[:icon][:text]).root)
+    else
+      ele.add_element("img").add_attributes({
+        "class" => "icon",
+        "alt"   => self.name,
+        "src"   => "images/#{self.name}.png",
       })
+    end 
     # Title
     ele = root.add_element("h4")
     ele.add_attribute("class", lang.to_s)
@@ -36,19 +53,18 @@ MetroItem = Struct.new(:name, :url, :title, :content, :others) do
       # Parse in html way in case that some html codes live in the content
       ele = root.add_element(REXML::Document.new("<p class='#{lang}'>#{p}</p>").root)
     end
-    # Others
-    if self.others.is_a? Hash
-      if self.others.include? :rubybadge
+    # Options
+    if self.opts.is_a? Hash
+      if self.opts.include? :rubybadge
         ele = root.add_element("a")
-        ele.add_attribute("href", self.others[:rubybadge])
-
+        ele.add_attribute("href", self.opts[:rubybadge])
         ele.add_element("img").add_attributes({
-            "class" => "metroitem_rubybadge",
-            "src" => self.others[:rubybadge] + "@2x.png"
-          })
+          "class" => "rubybadge",
+          "src" => self.opts[:rubybadge] + "@2x.png"
+        })
       end
-      if self.others.include? :hook
-        root.add_element(REXML::Document.new(self.others[:hook]).root)
+      if self.opts.include? :hook
+        root.add_element(REXML::Document.new(self.opts[:hook]).root)
       end
     end
     return root
@@ -76,9 +92,9 @@ class MetroTab
   def to_html(lang)
     root = REXML::Element.new("table") 
     root.add_attributes({
-        "border" => "0",
-        "style" => "text-align:center;",
-      })
+      "border" => "0",
+      "style" => "text-align:center;",
+    })
 
     # Add rows
     root.add_element("tr") # Title row

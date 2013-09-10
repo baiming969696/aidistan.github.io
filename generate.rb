@@ -1,8 +1,10 @@
 #!/usr/bin/env ruby
 # encoding: UTF-8
-
 require_relative "generator"
 
+#
+# LANGUAGES
+#
 LANGUAGES = {
   en:"English",
   cn:"简体中文",
@@ -21,7 +23,7 @@ item_Adome = MetroItem.new(
   {
     cn:"利用WordPress搭建的个人博客，通过多说同步至Qzone、人人、微博等平台。\n记录心情的点滴。",
     en:"My personal blog based on WordPress, using DuoShuo plugin to synchronize posts to social platforms.\n(In Chinese)",
-  },
+  }
 )
 
 item_AKB = MetroItem.new(
@@ -75,7 +77,7 @@ item_Bioinfo = MetroItem.new(
     en:"A collection of my scripts used in bioinformatics database processing.",
   },
   {
-    rubybadge:"http://badge.fury.io/rb/bioinfo"
+    # rubybadge:"http://badge.fury.io/rb/bioinfo"
   },
 )
 
@@ -91,7 +93,7 @@ item_MTG = MetroItem.new(
     en:"Library of MTG (Magic: The Gathering) for card price querying, deck managing and analysing.",
   },
   {
-    rubybadge:"http://badge.fury.io/rb/mtg-card"
+    # rubybadge:"http://badge.fury.io/rb/mtg-card"
   },
 )
 
@@ -119,6 +121,9 @@ item_GuipengLee = MetroItem.new(
     cn:"Lee用Python搭建的网站。",
     en:"Lee's website built by Python.",
   },
+  {
+    icon:{ text:"<tr><td>Lee</td></tr>", color:"#009000", size:50}
+  }
 )
 
 #
