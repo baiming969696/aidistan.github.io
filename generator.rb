@@ -9,6 +9,8 @@
 
 require "rexml/document"
 
+COLORS = ["#00aeef", "#ea428a", "#eed500", "#f5a70d", "#8bcb30", "#9962c1"]
+
 # @param [Hash] opts
 # @option opts [String] :hook HTML code to insert at MetroItem's tail
 # @option opts [String] :icon Text to substitute the image icon
@@ -28,7 +30,7 @@ MetroItem = Struct.new(:name, :url, :title, :content, :opts) do
       "target" => "_blank",
     })
     if self.opts.is_a?(Hash) && self.opts[:icon]
-      color = self.opts[:icon][:color]
+      color = self.opts[:icon][:color] || COLORS[rand(COLORS.size)]
       size = self.opts[:icon][:size] || 20
 
       ele = ele.add_element("table")
