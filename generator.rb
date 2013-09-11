@@ -121,8 +121,8 @@ class MetroTab
       end
 
       # Add an empty column if next column has a name
-      if @cols[index+1].is_a?(MetroColumn) && !@cols[index+1].name.nil?
-        root.elements[1].add_element("td").add_attribute("style", "width:50px;")
+      if @cols[index+1].is_a?(MetroColumn)
+        root.elements[1].add_element("td").add_attribute("style", @cols[index+1].name == "" ? "width:0px;" : "width:50px;")
         num_row.times{ |i| root.elements[2+i].add_element("td") }
       end
     end
