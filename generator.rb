@@ -43,7 +43,7 @@ MetroItem = Struct.new(:name, :url, :title, :content, :opts) do
       ele.add_element("img").add_attributes({
         "class" => "icon",
         "alt"   => self.name,
-        "src"   => "images/#{self.name}.png",
+        "src"   => (FileTest.exist?("images/#{self.name}.png") ? "images/#{self.name}.png" : "images/#{self.name}.jpg" ),
       })
     end 
     # Title
