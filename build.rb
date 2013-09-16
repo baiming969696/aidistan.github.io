@@ -112,7 +112,7 @@ tile_Galaxy = Tile.new(
   },
   content:{
     cn:"生物信息在线分析平台",
-    en:"A online bioinformatics analysis platform.",
+    en:"An online bioinformatics analysis platform.",
   },
 )
 
@@ -130,7 +130,6 @@ nav = {
   "Mirror" => { href:"#", children:{
     "Adome"  => "http://aidi.no-ip.org",
     "Github" => "http://aidistan.github.io",
-    "TNlist" => "http://bioinfo.au.tsinghua.edu.cn/member/atan/",
     }
   }
 }
