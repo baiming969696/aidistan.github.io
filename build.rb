@@ -50,44 +50,52 @@ tile_Github = Tile.new(
     en:"A list of my publicly visible projects which interest me a lot.",
   },
 )
-tile_LinkedIn = Tile.new(
-  name:"LinkedIn",
-  url:"http://www.linkedin.com/in/aidistan",
+tile_WebDAV = Tile.new(
+  name:"WebDAV",
+  url:"http://aidi.no-ip.org/WebDAV",
   title:{
-    cn:"LinkedIn",
-    en:"LinkedIn",
-  },
-  content:{
-    cn:"我在LinkedIn的简历。\nConnect me! :)",
-    en:"My brief profile. Connect me :)",
-  },
+    cn:"Aidi的WebDAV服务",
+    en:"Aidi's WebDAV service",
+  }
 )
-tile_Bioinfo = Tile.new(
-  name:"Bioinfo",
-  url:"http://aidistan.github.io/bioinfo/",
-  title:{
-    cn:"Bioinfo",
-    en:"Bioinfo",
-  },
-  content:{
-    cn:"最初是与生物信息学各种数据库交互的Ruby脚本的合集，现已整理为Ruby Gem库，并在持续地更新~",
-    en:"A collection of my scripts used in bioinformatics database processing.",
-  },
-  other_rubybadge:"http://badge.fury.io/rb/bioinfo"
-)
-tile_MTG = Tile.new(
-  name:"MTG-card",
-  url:"http://aidistan.github.io/mtg/",
-  title:{
-    cn:"MTG-card",
-    en:"MTG-card",
-  },
-  content:{
-    cn:"为万智牌写的一个Ruby Gem，可以用来查询牌价和管理牌组。",
-    en:"Library of MTG (Magic: The Gathering) for card price querying, deck managing and analysing.",
-  },
-  other_rubybadge:"http://badge.fury.io/rb/mtg-card"
-)
+# tile_LinkedIn = Tile.new(
+#   name:"LinkedIn",
+#   url:"http://www.linkedin.com/in/aidistan",
+#   title:{
+#     cn:"LinkedIn",
+#     en:"LinkedIn",
+#   },
+#   content:{
+#     cn:"我在LinkedIn的简历。\nConnect me! :)",
+#     en:"My brief profile. Connect me :)",
+#   },
+# )
+# tile_Bioinfo = Tile.new(
+#   name:"Bioinfo",
+#   url:"http://aidistan.github.io/bioinfo/",
+#   title:{
+#     cn:"Bioinfo",
+#     en:"Bioinfo",
+#   },
+#   content:{
+#     cn:"最初是与生物信息学各种数据库交互的Ruby脚本的合集，现已整理为Ruby Gem库，并在持续地更新~",
+#     en:"A collection of my scripts used in bioinformatics database processing.",
+#   },
+#   other_rubybadge:"http://badge.fury.io/rb/bioinfo"
+# )
+# tile_MTG = Tile.new(
+#   name:"MTG-card",
+#   url:"http://aidistan.github.io/mtg/",
+#   title:{
+#     cn:"MTG-card",
+#     en:"MTG-card",
+#   },
+#   content:{
+#     cn:"为万智牌写的一个Ruby Gem，可以用来查询牌价和管理牌组。",
+#     en:"Library of MTG (Magic: The Gathering) for card price querying, deck managing and analysing.",
+#   },
+#   other_rubybadge:"http://badge.fury.io/rb/mtg-card"
+# )
 tile_GuipengLee = Tile.new(
   name:"GuipengLee",
   url:"http://gplee.no-ip.org/",
@@ -96,51 +104,45 @@ tile_GuipengLee = Tile.new(
     en:"Lee's Website",
   },
   content:{
-    cn:"Lee用Python搭建的网站。",
-    en:"Lee's website built by Python.",
+    cn:"有空看看小王子的学习心得",
+    en:"Visit the website built by our little prince Lee",
   },
   icon_txt:"Lee",
   icon_txt_color:"#009000",
   icon_txt_size:50,
 )
-tile_Galaxy = Tile.new(
-  name:"Galaxy",
-  url:"http://galaxy.no-ip.info/",
+tile_BioTCM = Tile.new(
+  name:"BioTCM",
+  url:"http://biotcm.no-ip.info/",
   title:{
-    cn:"Galaxy",
-    en:"Galaxy",
-  },
-  content:{
-    cn:"生物信息在线分析平台",
-    en:"An online bioinformatics analysis platform.",
+    cn:"我们的研究组",
+    en:"Our research group",
   },
 )
 
-#
-# Create layouts here
-#
-col_sites = Column.new(name:"Sites").push tile_Adome, tile_AKB
-col_pages = Column.new(name:"Pages").push tile_Github, tile_LinkedIn
-col_libs = Column.new(name:"Featured Libs").push tile_Bioinfo, tile_MTG
-col_links = Column.new(name:"Links").push tile_GuipengLee, tile_Galaxy
 
-tab = Table.new.push col_sites, col_pages, col_libs, col_links
+#
+# Create pages here
+#
 
 nav = {
   "Mirror" => { href:"#", children:{
     "Adome"  => "http://aidi.no-ip.org",
     "Github" => "http://aidistan.github.io",
-    }
-  }
+  } }
 }
 
-#
-# Create pages here
-#
 Page.new(
   name:"Root", 
   title:"Root | Aidi Stan", 
   left_bottom: ["Aidi Stan's Rootpage", "#"],
   right_bottom: "Copyright (C) 2013 Aidi Stan",
   nav:nav,
-).push(tab).build
+).push(
+  Table.new.push(
+    Column.new(name:"Sites").push(tile_Adome, tile_AKB),
+    Column.new(name:"Pages").push(tile_Github),
+    Column.new(name:"Services").push(tile_WebDAV),
+    Column.new(name:"Links").push(tile_GuipengLee, tile_BioTCM),
+  )
+).build
